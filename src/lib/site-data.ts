@@ -131,9 +131,9 @@ export const BENEFITS = [
 ];
 
 export const STEPS = [
-  { n: "01", icon: "/assets/icons/funding.webp", title: "Buy a challenge", body: "Pick your account size and platform. Checkout takes under a minute." },
-  { n: "02", icon: "/assets/icons/no-time-limits.webp", title: "Trade", body: "Hit the profit target on our capital, at your own pace. No time limits." },
-  { n: "03", icon: "/assets/icons/weekly-payouts.webp", title: "Get paid", body: "Withdraw your profits, guaranteed within 2 business days." },
+  { n: "01", title: "Buy a challenge", body: "Pick your account size and platform. Checkout takes under a minute." },
+  { n: "02", title: "Trade", body: "Hit the profit target on our capital, at your own pace. No time limits." },
+  { n: "03", title: "Get paid", body: "Withdraw your profits, guaranteed within 2 business days." },
 ];
 
 export const HOME_FAQ = [
@@ -268,4 +268,6 @@ export const TRADING_RULES = [
 
 export const SUPPORT_EMAIL = "support@bluebeak.com";
 export const DASHBOARD_URL = "https://app.bluebeakcapital.com";
-export const CHECKOUT_URL = "https://checkout.bluebeakcapital.com";
+// Checkout lives inside this site; checkout.bluebeakcapital.com can be
+// pointed at this same Vercel project (redirect to /checkout) later.
+export const CHECKOUT_URL = "/checkout";

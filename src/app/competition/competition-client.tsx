@@ -64,8 +64,8 @@ export default function CompetitionClient() {
           className="absolute left-1/2 top-[-40%] h-[560px] w-[900px] -translate-x-1/2 rounded-full"
           style={{ background: "radial-gradient(closest-side, rgba(245,194,75,0.08), transparent 70%)" }}
         />
-        <div className="relative mx-auto max-w-[1200px] px-5">
-          <div className="flex flex-wrap items-center gap-4">
+        <div className="relative mx-auto max-w-[1000px] px-5 text-center">
+          <div className="flex flex-wrap items-center justify-center gap-4">
             <h1 className="bb-rise bb-display text-[clamp(52px,7vw,104px)] text-bb-ink">
               Trading <span className="bb-gradient-text">championship</span>
             </h1>
@@ -77,7 +77,7 @@ export default function CompetitionClient() {
           <p className="bb-rise mt-4 text-base text-bb-ink2" style={{ "--bb-delay": "120ms" } as React.CSSProperties}>
             {COMPETITION.window}
           </p>
-          <div className="bb-rise mt-8 flex flex-wrap items-center gap-8" style={{ "--bb-delay": "220ms" } as React.CSSProperties}>
+          <div className="bb-rise mt-8 flex flex-wrap items-center justify-center gap-8" style={{ "--bb-delay": "220ms" } as React.CSSProperties}>
             <Countdown />
             <a href={CHECKOUT_URL} className="bb-cta-gold rounded-full px-7 py-3.5 text-[15px] font-semibold">
               Join competition

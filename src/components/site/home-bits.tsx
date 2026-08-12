@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { CERTIFICATES, CHECKOUT_URL, PAYOUT_TOASTS, TESTIMONIALS } from "../../lib/site-data";
+import { CERTIFICATES, CHECKOUT_URL, TESTIMONIALS } from "../../lib/site-data";
 import { DisplayTitle, Kicker, Reveal } from "./primitives";
 
 /* ---------------------------------------------------------- */
@@ -14,6 +14,22 @@ export function HeroParallax() {
   const skyRef = useRef<HTMLDivElement | null>(null);
   const cloudRef = useRef<HTMLDivElement | null>(null);
   const birdRef = useRef<HTMLDivElement | null>(null);
+  const birdImgRef = useRef<HTMLImageElement | null>(null);
+  const [birdReady, setBirdReady] = useState(false);
+
+  // Start the fly-in only once the bird image is actually decoded,
+  // so the flight is seen from its very first frame (no pop-in).
+  useEffect(() => {
+    const img = birdImgRef.current;
+    if (!img) return;
+    if (img.complete && img.naturalWidth > 0) {
+      setBirdReady(true);
+      return;
+    }
+    const onLoad = () => setBirdReady(true);
+    img.addEventListener("load", onLoad);
+    return () => img.removeEventListener("load", onLoad);
+  }, []);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -84,10 +100,11 @@ export function HeroParallax() {
         style={{ background: "radial-gradient(closest-side, rgba(56,189,248,0.22), transparent 70%)" }}
       />
 
-      {/* Layer 3: the bird (fly-across entrance, then drift + parallax) */}
+      {/* Layer 3: the bird (glides in from the left once loaded, then drift + parallax) */}
       <div ref={birdRef} className="absolute right-[2%] top-[12%] w-[52vmin] max-w-[640px] will-change-transform md:right-[6%]">
-        <div className="bb-fly-in">
+        <div className={birdReady ? "bb-fly-in" : "bb-fly-hold"}>
           <img
+            ref={birdImgRef}
             src="/assets/hero/bird.webp"
             alt="A blue kingfisher gliding upward, wings spread"
             width={1024}
@@ -98,34 +115,8 @@ export function HeroParallax() {
         </div>
       </div>
 
-      {/* Copy block (toasts live in-flow above the headline so they can never overlap it) */}
+      {/* Copy block: the headline is the whole show */}
       <div className="relative mx-auto flex min-h-dvh max-w-[1200px] flex-col justify-end px-5 pb-24 pt-32">
-        <div className="pointer-events-none mb-auto hidden pb-10 lg:block">
-          {PAYOUT_TOASTS.map((t, i) => (
-            <div
-              key={t.name}
-              className="bb-rise mb-5"
-              style={{ "--bb-delay": `${500 + i * 220}ms`, marginLeft: i * 26 } as React.CSSProperties}
-            >
-            <div
-              className="bb-drift flex w-[240px] items-center gap-3 rounded-[14px] border border-bb-line bg-bb-raised/70 p-3 backdrop-blur-md"
-              style={{ "--bb-delay": `${800 + i * 400}ms` } as React.CSSProperties}
-            >
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[#2563EB] to-[#38BDF8] text-sm font-bold text-white">
-                {t.name[0]}
-              </span>
-              <div className="min-w-0">
-                <p className="truncate text-[13px] font-semibold text-bb-ink">
-                  {t.name} <span className="font-normal text-bb-ink3">{t.when}</span>
-                </p>
-                <p className="text-[13px] text-bb-ink2">
-                  Just got paid <span className="font-semibold text-bb-green">{t.amount}</span>
-                </p>
-              </div>
-            </div>
-            </div>
-          ))}
-        </div>
         <h1 className="bb-rise bb-display max-w-[9ch] text-[clamp(64px,9.5vw,150px)] text-bb-ink" style={{ "--bb-delay": "80ms" } as React.CSSProperties}>
           Fly above <span className="bb-gradient-text">the markets</span>
         </h1>

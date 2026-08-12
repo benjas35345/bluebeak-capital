@@ -18,11 +18,11 @@ export default function ChallengesClient() {
           className="absolute right-[-10%] top-[-30%] h-[480px] w-[480px] rounded-full"
           style={{ background: "radial-gradient(closest-side, rgba(56,189,248,0.12), transparent 70%)" }}
         />
-        <div className="relative mx-auto max-w-[1200px] px-5">
-          <h1 className="bb-rise bb-display max-w-[12ch] text-[clamp(56px,7.5vw,110px)] text-bb-ink">
+        <div className="relative mx-auto max-w-[1000px] px-5 text-center">
+          <h1 className="bb-rise bb-display text-[clamp(56px,7.5vw,110px)] text-bb-ink">
             Trading <span className="bb-gradient-text">challenges</span>
           </h1>
-          <p className="bb-rise mt-5 max-w-[54ch] text-lg leading-relaxed text-bb-ink2" style={{ "--bb-delay": "140ms" } as React.CSSProperties}>
+          <p className="bb-rise mx-auto mt-5 max-w-[54ch] text-lg leading-relaxed text-bb-ink2" style={{ "--bb-delay": "140ms" } as React.CSSProperties}>
             Select your challenge tier and demonstrate consistent profitability to earn a funded trading
             account with a profit split of up to 100%.
           </p>

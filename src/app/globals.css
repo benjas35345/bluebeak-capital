@@ -138,16 +138,24 @@
 }
 .bb-drift { animation: bb-drift 7s ease-in-out infinite; animation-delay: var(--bb-delay, 0ms); }
 
-/* Hero bird: flies in across the page on load, then settles on its perch */
+/* Hero bird: one continuous glide from off-screen left to its perch.
+   Linear timing + eased keyframe spacing = smooth decelerating flight
+   with no per-keyframe speed jumps. Animation only starts once the
+   image has actually loaded (.bb-fly-hold keeps it off screen). */
 @keyframes bb-fly-across {
-  0% { transform: translate3d(-115vw, 42vh, 0) scale(0.5) rotate(-9deg); }
-  55% { transform: translate3d(-34vw, 12vh, 0) scale(0.78) rotate(4deg); }
+  0%   { transform: translate3d(-110vw, 30vh, 0) scale(0.55) rotate(-5deg); }
+  20%  { transform: translate3d(-70vw, 19vh, 0) scale(0.7) rotate(-3deg); }
+  40%  { transform: translate3d(-40vw, 11vh, 0) scale(0.82) rotate(-1deg); }
+  60%  { transform: translate3d(-17.5vw, 5vh, 0) scale(0.91) rotate(1deg); }
+  80%  { transform: translate3d(-4.5vw, 1.2vh, 0) scale(0.97) rotate(0.5deg); }
   100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
 }
-.bb-fly-in { animation: bb-fly-across 2.1s cubic-bezier(0.23, 1, 0.32, 1) 0.15s both; }
+.bb-fly-hold { transform: translate3d(-110vw, 30vh, 0) scale(0.55); }
+.bb-fly-in { animation: bb-fly-across 2.6s linear both; will-change: transform; }
 
 @media (prefers-reduced-motion: reduce) {
   .bb-rise, .bb-drift, .bb-fly-in { animation: none; }
+  .bb-fly-hold { transform: none; }
 }
 
 /* LIVE pulse dot */
