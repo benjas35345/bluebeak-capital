@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { BENEFITS, CHECKOUT_URL, STEPS, HOME_FAQ } from "@/lib/site-data";
-import { AccordionItem, CountUp, DisplayTitle, Kicker, Reveal } from "@/components/site/primitives";
+import { AccordionItem, CountUp, DisplayTitle, Reveal } from "@/components/site/primitives";
 import { PricingConfigurator } from "@/components/site/pricing";
 import {
   CertificateWall,
@@ -22,7 +22,6 @@ export default function HomeClient() {
       <section className="py-[clamp(96px,12vw,160px)]">
         <div className="mx-auto max-w-[1200px] px-5">
           <Reveal className="text-center">
-            <div className="flex justify-center"><Kicker>How it works</Kicker></div>
             <DisplayTitle>Buy a challenge. Trade. Get paid.</DisplayTitle>
             <p className="mx-auto mt-4 max-w-[38ch] text-base text-bb-ink2">
               Three steps. That&apos;s the whole process.
@@ -53,7 +52,6 @@ export default function HomeClient() {
         />
         <div className="relative mx-auto max-w-[1200px] px-5">
           <Reveal className="text-center">
-            <div className="flex justify-center"><Kicker>Pick your bird</Kicker></div>
             <DisplayTitle>Select your ideal account</DisplayTitle>
             <p className="mx-auto mt-4 max-w-[40ch] text-base text-bb-ink2">
               Every account size is a bird. Pick the one that matches your wingspan.
@@ -69,7 +67,6 @@ export default function HomeClient() {
       <section className="border-y border-bb-line py-[clamp(80px,10vw,140px)]">
         <div className="mx-auto max-w-[1200px] px-5">
           <Reveal className="text-center">
-            <div className="flex justify-center"><Kicker>The numbers</Kicker></div>
             <DisplayTitle>Built to pay traders</DisplayTitle>
             <p className="mx-auto mt-4 max-w-[44ch] text-base text-bb-ink2">
               Trusted by traders in 140+ countries worldwide.
@@ -111,7 +108,6 @@ export default function HomeClient() {
       <section className="py-[clamp(96px,12vw,160px)]">
         <div className="mx-auto max-w-[1200px] px-5">
           <Reveal className="text-center">
-            <div className="flex justify-center"><Kicker>Why BlueBeak</Kicker></div>
             <DisplayTitle>Why traders choose BlueBeak</DisplayTitle>
             <p className="mx-auto mt-4 max-w-[52ch] text-base text-bb-ink2">
               Benefits built for serious traders, not marketing pages.

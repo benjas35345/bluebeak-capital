@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { CERTIFICATES, CHECKOUT_URL, TESTIMONIALS } from "../../lib/site-data";
-import { DisplayTitle, Kicker, Reveal } from "./primitives";
+import { DisplayTitle, Reveal } from "./primitives";
 
 /* ---------------------------------------------------------- */
 /* Hero: B1 cutout parallax rig (scroll + cursor, rAF-smooth) */
@@ -275,7 +275,6 @@ export function CertificateWall() {
     <section className="relative overflow-hidden bg-bb-raised/30 py-[clamp(96px,12vw,160px)]">
       <div className="mx-auto max-w-[1200px] px-5">
         <Reveal className="text-center">
-          <div className="flex justify-center"><Kicker>Proof of payouts</Kicker></div>
           <DisplayTitle>Payout certificates</DisplayTitle>
           <p className="mx-auto mt-5 max-w-[52ch] text-base leading-relaxed text-bb-ink2">
             Every withdrawal comes with a certificate worth framing: the trader, the verified amount,
@@ -334,7 +333,6 @@ export function TestimonialRail() {
       <div className="mx-auto max-w-[1200px] px-5">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <Reveal>
-            <Kicker>Trader stories</Kicker>
             <DisplayTitle>What our clients say</DisplayTitle>
           </Reveal>
           <div className="flex gap-2">
