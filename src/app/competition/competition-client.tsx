@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { COMPETITION, DASHBOARD_URL } from "@/lib/site-data";
+import { CHECKOUT_URL, COMPETITION } from "@/lib/site-data";
 import { AccordionItem, DisplayTitle, Reveal } from "@/components/site/primitives";
 
 function pad(n: number) {
@@ -79,7 +79,7 @@ export default function CompetitionClient() {
           </p>
           <div className="bb-rise mt-8 flex flex-wrap items-center gap-8" style={{ "--bb-delay": "220ms" } as React.CSSProperties}>
             <Countdown />
-            <a href={DASHBOARD_URL} className="bb-cta-gold rounded-full px-7 py-3.5 text-[15px] font-semibold">
+            <a href={CHECKOUT_URL} className="bb-cta-gold rounded-full px-7 py-3.5 text-[15px] font-semibold">
               Join competition
             </a>
           </div>
@@ -147,7 +147,7 @@ export default function CompetitionClient() {
       {/* Leaderboard */}
       <section className="border-y border-bb-line bg-bb-raised/30 py-[clamp(96px,12vw,160px)]">
         <div className="mx-auto max-w-[1200px] px-5">
-          <Reveal>
+          <Reveal className="text-center">
             <DisplayTitle>Live leaderboard</DisplayTitle>
             <p className="mt-3 text-[14px] text-bb-ink3">Updated throughout the trading day</p>
           </Reveal>

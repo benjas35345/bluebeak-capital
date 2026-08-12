@@ -5,7 +5,7 @@ import {
   AFFILIATE_FEATURES,
   AFFILIATE_TESTIMONIALS,
   AFFILIATE_TIERS,
-  DASHBOARD_URL,
+  CHECKOUT_URL,
   FAQ_CATEGORIES,
 } from "@/lib/site-data";
 import { AccordionItem, DisplayTitle, Kicker, Reveal } from "@/components/site/primitives";
@@ -60,7 +60,7 @@ function MagneticBanner() {
       </h2>
       <a
         ref={btnRef}
-        href={DASHBOARD_URL}
+        href={CHECKOUT_URL}
         className="bb-cta-primary relative mt-8 inline-block rounded-full px-9 py-4 text-base font-semibold will-change-transform"
       >
         Join the affiliate program
@@ -165,9 +165,9 @@ export default function AffiliateClient() {
       {/* Partner features */}
       <section className="py-[clamp(96px,12vw,160px)]">
         <div className="mx-auto max-w-[1200px] px-5">
-          <Reveal>
-            <DisplayTitle className="max-w-[16ch]">Partner with BlueBeak</DisplayTitle>
-            <p className="mt-4 max-w-[56ch] text-base text-bb-ink2">
+          <Reveal className="text-center">
+            <DisplayTitle>Partner with BlueBeak</DisplayTitle>
+            <p className="mx-auto mt-4 max-w-[56ch] text-base text-bb-ink2">
               Turn your audience into recurring commissions by promoting a prop firm built for serious
               traders and long term growth.
             </p>
@@ -193,7 +193,7 @@ export default function AffiliateClient() {
       {/* Affiliate voices */}
       <section className="border-y border-bb-line bg-bb-raised/30 py-[clamp(96px,12vw,160px)]">
         <div className="mx-auto max-w-[1200px] px-5">
-          <Reveal>
+          <Reveal className="text-center">
             <DisplayTitle>What our affiliates say</DisplayTitle>
           </Reveal>
           <div className="mt-12 columns-1 gap-5 md:columns-2 [&>*]:mb-5">

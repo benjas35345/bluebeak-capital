@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import {
   BIRDS,
+  CHECKOUT_URL,
   PATHS,
   PLATFORMS,
   SIZES,
@@ -118,9 +118,9 @@ export function PricingConfigurator({ id = "pricing" }: { id?: string }) {
                 </p>
                 <p className="mt-1 text-[13px] text-bb-accent">30% off at checkout with code LAUNCH</p>
               </div>
-              <Link href="/challenges#rules" className="bb-cta-primary rounded-full px-7 py-3.5 text-[15px] font-semibold">
+              <a href={CHECKOUT_URL} className="bb-cta-primary rounded-full px-7 py-3.5 text-[15px] font-semibold">
                 Get Funded
-              </Link>
+              </a>
             </div>
 
             <div className="mt-6 divide-y divide-bb-line rounded-[14px] border border-bb-line bg-bb-raised/40">

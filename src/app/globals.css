@@ -45,9 +45,13 @@
   --font-bb-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
-/* Base page feel */
+/* Base page feel: deep navy with a slight ambient gradient */
 .bb-page {
   background-color: #050e1f;
+  background-image:
+    radial-gradient(1100px 700px at 85% -60px, rgba(37, 99, 235, 0.13), transparent 65%),
+    radial-gradient(900px 650px at -5% 30%, rgba(56, 189, 248, 0.06), transparent 60%),
+    linear-gradient(180deg, #071229 0%, #050e1f 40%, #04080f 100%);
   color: #f2f7fd;
   font-family: "Inter Tight", "Inter", ui-sans-serif, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -133,8 +137,17 @@
   50% { transform: translateY(-12px); }
 }
 .bb-drift { animation: bb-drift 7s ease-in-out infinite; animation-delay: var(--bb-delay, 0ms); }
+
+/* Hero bird: flies in across the page on load, then settles on its perch */
+@keyframes bb-fly-across {
+  0% { transform: translate3d(-115vw, 42vh, 0) scale(0.5) rotate(-9deg); }
+  55% { transform: translate3d(-34vw, 12vh, 0) scale(0.78) rotate(4deg); }
+  100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+}
+.bb-fly-in { animation: bb-fly-across 2.1s cubic-bezier(0.23, 1, 0.32, 1) 0.15s both; }
+
 @media (prefers-reduced-motion: reduce) {
-  .bb-rise, .bb-drift { animation: none; }
+  .bb-rise, .bb-drift, .bb-fly-in { animation: none; }
 }
 
 /* LIVE pulse dot */

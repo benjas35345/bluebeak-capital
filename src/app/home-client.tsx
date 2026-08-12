@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { BENEFITS, STEPS, HOME_FAQ } from "@/lib/site-data";
+import { BENEFITS, CHECKOUT_URL, STEPS, HOME_FAQ } from "@/lib/site-data";
 import { AccordionItem, CountUp, DisplayTitle, Kicker, Reveal } from "@/components/site/primitives";
 import { PricingConfigurator } from "@/components/site/pricing";
 import {
@@ -18,26 +18,36 @@ export default function HomeClient() {
       <HeroParallax />
       <PayoutTicker />
 
-      {/* How it works: asymmetric bento */}
+      {/* How it works: three steps, one row */}
       <section className="py-[clamp(96px,12vw,160px)]">
         <div className="mx-auto max-w-[1200px] px-5">
-          <Reveal>
-            <Kicker>How it works</Kicker>
-            <DisplayTitle className="max-w-[16ch]">Four steps from sign up to payout</DisplayTitle>
+          <Reveal className="text-center">
+            <div className="flex justify-center"><Kicker>How it works</Kicker></div>
+            <DisplayTitle>Buy a challenge. Trade. Get paid.</DisplayTitle>
+            <p className="mx-auto mt-4 max-w-[38ch] text-base text-bb-ink2">
+              Three steps. That&apos;s the whole process.
+            </p>
           </Reveal>
-          <div className="mt-12 grid gap-5 md:grid-cols-12">
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
             {STEPS.map((s, i) => (
-              <Reveal
-                key={s.n}
-                delay={i * 90}
-                className={i === 0 || i === 3 ? "md:col-span-7" : "md:col-span-5"}
-              >
+              <Reveal key={s.n} delay={i * 90}>
                 <div className="bb-card group relative h-full overflow-hidden rounded-[20px] p-8 transition-transform duration-300 hover:-translate-y-1">
-                  <span className="bb-display text-6xl text-bb-nested transition-colors duration-300 group-hover:text-bb-accent/40">
-                    {s.n}
-                  </span>
-                  <h3 className="mt-4 text-xl font-semibold tracking-tight text-bb-ink">{s.title}</h3>
-                  <p className="mt-2 max-w-[46ch] text-[15px] leading-relaxed text-bb-ink2">{s.body}</p>
+                  <div className="flex items-start justify-between">
+                    <img
+                      src={s.icon}
+                      alt=""
+                      aria-hidden
+                      width={256}
+                      height={256}
+                      loading="lazy"
+                      className="h-14 w-14 rounded-[12px] transition-transform duration-300 group-hover:-rotate-3 group-hover:scale-105"
+                    />
+                    <span className="bb-display text-5xl text-bb-nested transition-colors duration-300 group-hover:text-bb-accent/40">
+                      {s.n}
+                    </span>
+                  </div>
+                  <h3 className="mt-6 text-xl font-semibold tracking-tight text-bb-ink">{s.title}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-bb-ink2">{s.body}</p>
                   <span className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-bb-accent/0 blur-2xl transition-colors duration-500 group-hover:bg-bb-accent/10" />
                 </div>
               </Reveal>
@@ -69,40 +79,54 @@ export default function HomeClient() {
         </div>
       </section>
 
-      {/* Stats band with oversized numeral */}
+      {/* Stats: three in a row */}
       <section className="border-y border-bb-line py-[clamp(80px,10vw,140px)]">
         <div className="mx-auto max-w-[1200px] px-5">
-          <div className="grid items-center gap-12 lg:grid-cols-[1.2fr_1fr]">
-            <Reveal>
-              <div className="bb-display leading-none text-bb-ink">
-                <span className="block text-[clamp(96px,14vw,220px)]">
-                  <CountUp to={100} suffix="%" />
-                </span>
-                <span className="mt-2 block max-w-[24ch] font-bb-sans text-base normal-case tracking-normal text-bb-ink2" style={{ fontFamily: "Inter Tight, sans-serif" }}>
-                  profit split at the top end. Keep everything you earn, with no hidden fees or reductions.
-                </span>
-              </div>
-            </Reveal>
-            <div className="grid gap-10">
-              <Reveal delay={80}>
-                <p className="text-5xl font-bold tracking-tight text-bb-ink">
-                  <CountUp to={140} suffix="+" />
-                </p>
-                <p className="mt-2 text-[15px] text-bb-ink3">countries with active BlueBeak traders</p>
+          <Reveal className="text-center">
+            <div className="flex justify-center"><Kicker>The numbers</Kicker></div>
+            <DisplayTitle>Built to pay traders</DisplayTitle>
+            <p className="mx-auto mt-4 max-w-[44ch] text-base text-bb-ink2">
+              Trusted by traders in 140+ countries worldwide.
+            </p>
+          </Reveal>
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            {[
+              {
+                icon: "/assets/icons/profit-split.webp",
+                big: <CountUp to={100} suffix="%" />,
+                title: "Profit split",
+                body: "Keep everything you earn at the top end. No hidden fees, no reductions.",
+              },
+              {
+                icon: "/assets/icons/funding.webp",
+                big: <>$<CountUp to={2000000} />+</>,
+                title: "Funded capital",
+                body: "Provided to traders worldwide, with scaling up to $4,000,000.",
+              },
+              {
+                icon: "/assets/icons/weekly-payouts.webp",
+                big: <>2 Days</>,
+                title: "Payout guarantee",
+                body: "Paid within 2 business days, or you receive an extra $500.",
+              },
+            ].map((s, i) => (
+              <Reveal key={s.title} delay={i * 90}>
+                <div className="bb-card group flex h-full flex-col rounded-[20px] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-bb-line-strong">
+                  <img
+                    src={s.icon}
+                    alt=""
+                    aria-hidden
+                    width={256}
+                    height={256}
+                    loading="lazy"
+                    className="h-14 w-14 rounded-[12px] transition-transform duration-300 group-hover:-rotate-3 group-hover:scale-105"
+                  />
+                  <p className="bb-display mt-6 text-[clamp(44px,4.5vw,64px)] leading-none text-bb-ink">{s.big}</p>
+                  <p className="mt-1 text-sm font-semibold uppercase tracking-[0.14em] text-bb-accent">{s.title}</p>
+                  <p className="mt-3 text-[15px] leading-relaxed text-bb-ink2">{s.body}</p>
+                </div>
               </Reveal>
-              <Reveal delay={160}>
-                <p className="text-5xl font-bold tracking-tight text-bb-ink">
-                  $<CountUp to={2000000} />+
-                </p>
-                <p className="mt-2 text-[15px] text-bb-ink3">in funded capital provided to traders worldwide</p>
-              </Reveal>
-              <Reveal delay={240}>
-                <p className="text-5xl font-bold tracking-tight text-bb-ink">2 days</p>
-                <p className="mt-2 text-[15px] text-bb-ink3">
-                  payout guarantee: paid within 2 business days or you receive an extra $500
-                </p>
-              </Reveal>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -112,9 +136,10 @@ export default function HomeClient() {
       {/* Why BlueBeak: asymmetric grid with icon renders */}
       <section className="py-[clamp(96px,12vw,160px)]">
         <div className="mx-auto max-w-[1200px] px-5">
-          <Reveal>
-            <DisplayTitle className="max-w-[14ch]">Why traders choose BlueBeak</DisplayTitle>
-            <p className="mt-4 max-w-[52ch] text-base text-bb-ink2">
+          <Reveal className="text-center">
+            <div className="flex justify-center"><Kicker>Why BlueBeak</Kicker></div>
+            <DisplayTitle>Why traders choose BlueBeak</DisplayTitle>
+            <p className="mx-auto mt-4 max-w-[52ch] text-base text-bb-ink2">
               Benefits built for serious traders, not marketing pages.
             </p>
           </Reveal>
@@ -185,9 +210,9 @@ export default function HomeClient() {
               Pick your bird, pass the challenge, and trade our capital. Your first payout is closer than you think.
             </p>
             <div className="mt-9 flex justify-center">
-              <Link href="/challenges" className="bb-cta-primary rounded-full px-10 py-4.5 text-lg font-semibold">
+              <a href={CHECKOUT_URL} className="bb-cta-primary rounded-full px-10 py-4.5 text-lg font-semibold">
                 Get Funded
-              </Link>
+              </a>
             </div>
           </Reveal>
         </div>

@@ -131,10 +131,9 @@ export const BENEFITS = [
 ];
 
 export const STEPS = [
-  { n: "01", title: "Choose your plan", body: "Select the perfect account size for your experience and goals." },
-  { n: "02", title: "Start trading", body: "Access our capital and kickstart your trading journey with no personal risk." },
-  { n: "03", title: "Pass the challenge", body: "Prove your skills by hitting profit targets and managing risk." },
-  { n: "04", title: "Get paid", body: "Unlock fast withdrawals and enjoy your profits within 24 hours." },
+  { n: "01", icon: "/assets/icons/funding.webp", title: "Buy a challenge", body: "Pick your account size and platform. Checkout takes under a minute." },
+  { n: "02", icon: "/assets/icons/no-time-limits.webp", title: "Trade", body: "Hit the profit target on our capital, at your own pace. No time limits." },
+  { n: "03", icon: "/assets/icons/weekly-payouts.webp", title: "Get paid", body: "Withdraw your profits, guaranteed within 2 business days." },
 ];
 
 export const HOME_FAQ = [
@@ -269,3 +268,4 @@ export const TRADING_RULES = [
 
 export const SUPPORT_EMAIL = "support@bluebeak.com";
 export const DASHBOARD_URL = "https://app.bluebeakcapital.com";
+export const CHECKOUT_URL = "https://checkout.bluebeakcapital.com";

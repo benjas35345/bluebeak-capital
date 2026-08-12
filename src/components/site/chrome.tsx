@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { DASHBOARD_URL, SUPPORT_EMAIL } from "../../lib/site-data";
+import { CHECKOUT_URL, SUPPORT_EMAIL } from "../../lib/site-data";
 
 const NAV_LINKS = [
   { to: "/", label: "Home" },
@@ -85,15 +85,9 @@ export function SiteNav() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <a
-            href={DASHBOARD_URL}
-            className="rounded-full border border-bb-line-strong px-5 py-2.5 text-sm font-medium text-bb-ink transition-colors hover:border-bb-accent hover:text-bb-accent"
-          >
-            Log in
-          </a>
-          <Link href="/challenges" className="bb-cta-primary rounded-full px-5 py-2.5 text-sm font-semibold">
+          <a href={CHECKOUT_URL} className="bb-cta-primary rounded-full px-6 py-2.5 text-sm font-semibold">
             Get Funded
-          </Link>
+          </a>
         </div>
 
         <button
@@ -127,12 +121,9 @@ export function SiteNav() {
             ))}
           </nav>
           <div className="mt-4 flex gap-3">
-            <a href={DASHBOARD_URL} className="flex-1 rounded-full border border-bb-line-strong px-5 py-3 text-center text-sm font-medium text-bb-ink">
-              Log in
-            </a>
-            <Link href="/challenges" className="bb-cta-primary flex-1 rounded-full px-5 py-3 text-center text-sm font-semibold">
+            <a href={CHECKOUT_URL} className="bb-cta-primary flex-1 rounded-full px-5 py-3 text-center text-sm font-semibold">
               Get Funded
-            </Link>
+            </a>
           </div>
         </div>
       ) : null}
@@ -180,7 +171,7 @@ export function SiteFooter() {
             <li><Link href="/challenges" className="text-bb-ink2 hover:text-bb-accent">Challenges</Link></li>
             <li><Link href="/competition" className="text-bb-ink2 hover:text-bb-accent">Competitions</Link></li>
             <li><Link href="/affiliate" className="text-bb-ink2 hover:text-bb-accent">Affiliate program</Link></li>
-            <li><Link href="/challenges" className="text-bb-ink2 hover:text-bb-accent">Get Funded</Link></li>
+            <li><a href={CHECKOUT_URL} className="text-bb-ink2 hover:text-bb-accent">Get Funded</a></li>
           </ul>
         </div>
 

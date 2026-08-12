@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { CERTIFICATES, PAYOUT_TOASTS, TESTIMONIALS } from "../../lib/site-data";
+import { CERTIFICATES, CHECKOUT_URL, PAYOUT_TOASTS, TESTIMONIALS } from "../../lib/site-data";
 import { DisplayTitle, Kicker, Reveal } from "./primitives";
 
 /* ---------------------------------------------------------- */
@@ -84,48 +84,48 @@ export function HeroParallax() {
         style={{ background: "radial-gradient(closest-side, rgba(56,189,248,0.22), transparent 70%)" }}
       />
 
-      {/* Layer 3: the bird */}
+      {/* Layer 3: the bird (fly-across entrance, then drift + parallax) */}
       <div ref={birdRef} className="absolute right-[2%] top-[12%] w-[52vmin] max-w-[640px] will-change-transform md:right-[6%]">
-        <img
-          src="/assets/hero/bird.webp"
-          alt="A blue kingfisher gliding upward, wings spread"
-          width={1024}
-          height={576}
-          className="bb-drift h-auto w-full"
-          fetchPriority="high"
-        />
+        <div className="bb-fly-in">
+          <img
+            src="/assets/hero/bird.webp"
+            alt="A blue kingfisher gliding upward, wings spread"
+            width={1024}
+            height={576}
+            className="bb-drift h-auto w-full"
+            fetchPriority="high"
+          />
+        </div>
       </div>
 
-      {/* Floating payout toasts */}
-      <div className="pointer-events-none absolute left-[4%] top-[22%] hidden lg:block">
-        {PAYOUT_TOASTS.map((t, i) => (
-          <div
-            key={t.name}
-            className="bb-rise mb-5"
-            style={{ "--bb-delay": `${500 + i * 220}ms`, marginLeft: i * 26 } as React.CSSProperties}
-          >
-          <div
-            className="bb-drift flex w-[240px] items-center gap-3 rounded-[14px] border border-bb-line bg-bb-raised/70 p-3 backdrop-blur-md"
-            style={{ "--bb-delay": `${800 + i * 400}ms` } as React.CSSProperties}
-          >
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[#2563EB] to-[#38BDF8] text-sm font-bold text-white">
-              {t.name[0]}
-            </span>
-            <div className="min-w-0">
-              <p className="truncate text-[13px] font-semibold text-bb-ink">
-                {t.name} <span className="font-normal text-bb-ink3">{t.when}</span>
-              </p>
-              <p className="text-[13px] text-bb-ink2">
-                Just got paid <span className="font-semibold text-bb-green">{t.amount}</span>
-              </p>
+      {/* Copy block (toasts live in-flow above the headline so they can never overlap it) */}
+      <div className="relative mx-auto flex min-h-dvh max-w-[1200px] flex-col justify-end px-5 pb-24 pt-32">
+        <div className="pointer-events-none mb-auto hidden pb-10 lg:block">
+          {PAYOUT_TOASTS.map((t, i) => (
+            <div
+              key={t.name}
+              className="bb-rise mb-5"
+              style={{ "--bb-delay": `${500 + i * 220}ms`, marginLeft: i * 26 } as React.CSSProperties}
+            >
+            <div
+              className="bb-drift flex w-[240px] items-center gap-3 rounded-[14px] border border-bb-line bg-bb-raised/70 p-3 backdrop-blur-md"
+              style={{ "--bb-delay": `${800 + i * 400}ms` } as React.CSSProperties}
+            >
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[#2563EB] to-[#38BDF8] text-sm font-bold text-white">
+                {t.name[0]}
+              </span>
+              <div className="min-w-0">
+                <p className="truncate text-[13px] font-semibold text-bb-ink">
+                  {t.name} <span className="font-normal text-bb-ink3">{t.when}</span>
+                </p>
+                <p className="text-[13px] text-bb-ink2">
+                  Just got paid <span className="font-semibold text-bb-green">{t.amount}</span>
+                </p>
+              </div>
             </div>
-          </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Copy block */}
-      <div className="relative mx-auto flex min-h-dvh max-w-[1200px] flex-col justify-end px-5 pb-24 pt-40">
+            </div>
+          ))}
+        </div>
         <h1 className="bb-rise bb-display max-w-[9ch] text-[clamp(64px,9.5vw,150px)] text-bb-ink" style={{ "--bb-delay": "80ms" } as React.CSSProperties}>
           Fly above <span className="bb-gradient-text">the markets</span>
         </h1>
@@ -133,9 +133,9 @@ export function HeroParallax() {
           Trade your way, get funded with up to $500K, and keep up to 100% of the profits.
         </p>
         <div className="bb-rise mt-8 flex flex-wrap items-center gap-7" style={{ "--bb-delay": "340ms" } as React.CSSProperties}>
-          <Link href="/challenges" className="bb-cta-primary rounded-full px-8 py-4 text-base font-semibold">
+          <a href={CHECKOUT_URL} className="bb-cta-primary rounded-full px-8 py-4 text-base font-semibold">
             Get Funded
-          </Link>
+          </a>
           <a href="#pricing" className="bb-link-arrow inline-flex items-center gap-2 text-base font-medium text-bb-ink">
             View challenges
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
