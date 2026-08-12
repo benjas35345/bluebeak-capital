@@ -116,7 +116,7 @@ export function HeroParallax() {
         <div className={birdReady ? "bb-fly-in" : "bb-fly-hold"}>
           <video
             ref={birdVidRef}
-            className="bb-drift h-auto w-full mix-blend-screen"
+            className="bb-drift h-auto w-full"
             autoPlay
             muted
             loop
@@ -124,8 +124,8 @@ export function HeroParallax() {
             preload="auto"
             poster="/assets/hero/bird.webp"
           >
+            {/* VP8 webm with a real alpha channel — true cutout, no background box */}
             <source src="/assets/hero/hero-bird.webm" type="video/webm" />
-            <source src="/assets/hero/hero-bird.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
