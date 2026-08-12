@@ -28,12 +28,12 @@ export default function HomeClient() {
               Three steps. That&apos;s the whole process.
             </p>
           </Reveal>
-          <div className="mt-14 grid gap-x-10 gap-y-10 md:grid-cols-3">
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
             {STEPS.map((s, i) => (
               <Reveal key={s.n} delay={i * 90}>
-                <div className="group border-t border-bb-line pt-7 transition-colors">
-                  <span className="bb-display text-3xl text-bb-accent">{s.n}</span>
-                  <h3 className="mt-3 text-xl font-semibold tracking-tight text-bb-ink">{s.title}</h3>
+                <div className="bb-card group h-full rounded-[20px] p-8 transition-transform duration-300 hover:-translate-y-1">
+                  <span className="bb-display text-5xl text-bb-nested transition-colors group-hover:text-bb-accent/40">{s.n}</span>
+                  <h3 className="mt-4 text-lg font-semibold tracking-tight text-bb-ink">{s.title}</h3>
                   <p className="mt-2 text-[15px] leading-relaxed text-bb-ink2">{s.body}</p>
                 </div>
               </Reveal>
@@ -75,7 +75,7 @@ export default function HomeClient() {
               Trusted by traders in 140+ countries worldwide.
             </p>
           </Reveal>
-          <div className="mt-14 grid gap-x-10 gap-y-10 text-center md:grid-cols-3">
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
             {[
               {
                 big: <CountUp to={100} suffix="%" />,
@@ -94,8 +94,8 @@ export default function HomeClient() {
               },
             ].map((s, i) => (
               <Reveal key={s.title} delay={i * 90}>
-                <div className="border-t border-bb-line pt-8">
-                  <p className="bb-display text-[clamp(52px,5.5vw,80px)] leading-none text-bb-ink">{s.big}</p>
+                <div className="bb-card h-full rounded-[20px] p-8 text-center transition-transform duration-300 hover:-translate-y-1">
+                  <p className="bb-display text-[clamp(48px,5vw,72px)] leading-none text-bb-ink">{s.big}</p>
                   <p className="mt-2 text-sm font-semibold uppercase tracking-[0.14em] text-bb-accent">{s.title}</p>
                   <p className="mx-auto mt-3 max-w-[34ch] text-[15px] leading-relaxed text-bb-ink2">{s.body}</p>
                 </div>
@@ -117,17 +117,15 @@ export default function HomeClient() {
               Benefits built for serious traders, not marketing pages.
             </p>
           </Reveal>
-          <div className="mt-12 grid gap-x-12 gap-y-10 md:grid-cols-2">
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {BENEFITS.map((b, i) => (
-              <Reveal key={b.title} delay={(i % 2) * 80}>
-                <div className="group flex gap-5 border-t border-bb-line pt-6">
-                  <span className="bb-display text-2xl text-bb-ink3 transition-colors group-hover:text-bb-accent">
+              <Reveal key={b.title} delay={(i % 3) * 90}>
+                <div className="bb-card group h-full rounded-[20px] p-8 transition-transform duration-300 hover:-translate-y-1">
+                  <span className="bb-display text-4xl text-bb-nested transition-colors group-hover:text-bb-accent/40">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <div>
-                    <h3 className="text-lg font-semibold tracking-tight text-bb-ink">{b.title}</h3>
-                    <p className="mt-2 max-w-[52ch] text-[15px] leading-relaxed text-bb-ink2">{b.body}</p>
-                  </div>
+                  <h3 className="mt-4 text-lg font-semibold tracking-tight text-bb-ink">{b.title}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-bb-ink2">{b.body}</p>
                 </div>
               </Reveal>
             ))}

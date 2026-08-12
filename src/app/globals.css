@@ -297,6 +297,29 @@
 }
 .bb-nav-link:hover::after, .bb-nav-link[data-active="true"]::after { transform: translateX(-50%) scale(1); }
 
+/* Payout certificate: gold-framed, frameable */
+.bb-cert {
+  background: linear-gradient(160deg, rgba(245,194,75,0.55) 0%, rgba(138,109,42,0.25) 40%, rgba(245,194,75,0.45) 100%);
+  box-shadow: 0 24px 60px rgba(2, 8, 23, 0.6);
+}
+.bb-cert-inner {
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(56,189,248,0.08), transparent 60%),
+    linear-gradient(180deg, #0b1e3d 0%, #0a1a34 100%);
+}
+.bb-cert-corner {
+  width: 14px;
+  height: 14px;
+  border-top: 1.5px solid rgba(245,194,75,0.7);
+  border-left: 1.5px solid rgba(245,194,75,0.7);
+}
+.bb-cert-amount {
+  background: linear-gradient(92deg, #F5C24B 0%, #ffe6a8 50%, #F5C24B 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 /* Certificate wall fade mask */
 .bb-fade-y {
   mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);

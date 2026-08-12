@@ -84,10 +84,6 @@ export default function AffiliateClient() {
           <h1 className="bb-rise bb-display text-[clamp(56px,7.5vw,110px)] text-bb-ink">
             Become an <span className="bb-gradient-text">affiliate</span>
           </h1>
-          <p className="bb-rise mx-auto mt-5 max-w-[46ch] text-lg leading-relaxed text-bb-ink2" style={{ "--bb-delay": "140ms" } as React.CSSProperties}>
-            Start earning today: refer traders to BlueBeak and get rewarded for every referral, with
-            commissions up to 30% and free funded accounts.
-          </p>
         </div>
       </section>
 

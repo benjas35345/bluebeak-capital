@@ -89,13 +89,13 @@ export const PAYOUT_TOASTS = [
 ];
 
 export const CERTIFICATES = [
-  { name: "Frank", amount: "$16,720", step: "1 Step", size: "$200K", date: "01/01/2026" },
-  { name: "Abdul", amount: "$8,619", step: "1 Step V2", size: "$150K", date: "11/01/2026" },
-  { name: "Hernandez", amount: "$13,442", step: "1 Step", size: "$150K", date: "05/01/2026" },
-  { name: "Lucinda", amount: "$1,277", step: "3 Step", size: "$10K", date: "08/01/2026" },
-  { name: "Edward", amount: "$2,149", step: "2 Step", size: "$50K", date: "08/01/2026" },
-  { name: "Joao", amount: "$17,331", step: "3 Step", size: "$250K", date: "13/01/2026" },
-  { name: "Susie", amount: "$927", step: "2 Step", size: "$5K", date: "13/01/2026" },
+  { name: "Frank", amount: "$16,720", step: "1 Step", size: "$200K", date: "01/01/2026", serial: "BBC-26-0148" },
+  { name: "Abdul", amount: "$8,619", step: "1 Step V2", size: "$150K", date: "11/01/2026", serial: "BBC-26-0203" },
+  { name: "Hernandez", amount: "$13,442", step: "1 Step", size: "$150K", date: "05/01/2026", serial: "BBC-26-0176" },
+  { name: "Lucinda", amount: "$1,277", step: "3 Step", size: "$10K", date: "08/01/2026", serial: "BBC-26-0189" },
+  { name: "Edward", amount: "$2,149", step: "2 Step", size: "$50K", date: "08/01/2026", serial: "BBC-26-0191" },
+  { name: "Joao", amount: "$17,331", step: "3 Step", size: "$250K", date: "13/01/2026", serial: "BBC-26-0214" },
+  { name: "Susie", amount: "$927", step: "2 Step", size: "$5K", date: "13/01/2026", serial: "BBC-26-0216" },
 ];
 
 export const TESTIMONIALS = [

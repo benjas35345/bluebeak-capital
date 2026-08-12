@@ -14,21 +14,26 @@ export function HeroParallax() {
   const skyRef = useRef<HTMLDivElement | null>(null);
   const cloudRef = useRef<HTMLDivElement | null>(null);
   const birdRef = useRef<HTMLDivElement | null>(null);
-  const birdImgRef = useRef<HTMLImageElement | null>(null);
+  const birdVidRef = useRef<HTMLVideoElement | null>(null);
   const [birdReady, setBirdReady] = useState(false);
 
-  // Start the fly-in only once the bird image is actually decoded,
-  // so the flight is seen from its very first frame (no pop-in).
+  // Start the fly-in only once the bird clip has buffered its first frame,
+  // so the flight (wings already beating) is seen from frame one — no pop-in.
   useEffect(() => {
-    const img = birdImgRef.current;
-    if (!img) return;
-    if (img.complete && img.naturalWidth > 0) {
+    const vid = birdVidRef.current;
+    if (!vid) return;
+    if (vid.readyState >= 2) {
       setBirdReady(true);
       return;
     }
-    const onLoad = () => setBirdReady(true);
-    img.addEventListener("load", onLoad);
-    return () => img.removeEventListener("load", onLoad);
+    const onReady = () => setBirdReady(true);
+    vid.addEventListener("loadeddata", onReady);
+    // Safety: never hold the bird off-screen forever if the video stalls.
+    const t = setTimeout(onReady, 1500);
+    return () => {
+      vid.removeEventListener("loadeddata", onReady);
+      clearTimeout(t);
+    };
   }, []);
 
   useEffect(() => {
@@ -100,18 +105,28 @@ export function HeroParallax() {
         style={{ background: "radial-gradient(closest-side, rgba(56,189,248,0.22), transparent 70%)" }}
       />
 
-      {/* Layer 3: the bird (glides in from the left once loaded, then drift + parallax) */}
-      <div ref={birdRef} className="absolute right-[2%] top-[12%] w-[52vmin] max-w-[640px] will-change-transform md:right-[6%]">
+      {/* Layer 3: the bird — a looping clip with beating wings, gliding in from the
+          left, flying OVER the headline (z-50, click-through). Screen blend drops
+          the clip's dark background so only the bird shows. */}
+      <div
+        ref={birdRef}
+        aria-hidden
+        className="pointer-events-none absolute right-[2%] top-[12%] z-50 w-[52vmin] max-w-[640px] will-change-transform md:right-[6%]"
+      >
         <div className={birdReady ? "bb-fly-in" : "bb-fly-hold"}>
-          <img
-            ref={birdImgRef}
-            src="/assets/hero/bird.webp"
-            alt="A blue kingfisher gliding upward, wings spread"
-            width={1024}
-            height={576}
-            className="bb-drift h-auto w-full"
-            fetchPriority="high"
-          />
+          <video
+            ref={birdVidRef}
+            className="bb-drift h-auto w-full mix-blend-screen"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            poster="/assets/hero/bird.webp"
+          >
+            <source src="/assets/hero/hero-bird.webm" type="video/webm" />
+            <source src="/assets/hero/hero-bird.mp4" type="video/mp4" />
+          </video>
         </div>
       </div>
 
@@ -184,58 +199,107 @@ export function PayoutTicker() {
 /* Certificate wall: dual-column opposing vertical marquee */
 /* --------------------------------------------------- */
 
-function CertCard({ c }: { c: (typeof CERTIFICATES)[number] }) {
+/** A framed, trophy-topped payout certificate — designed to look worth framing. */
+export function PayoutCertificate({ c }: { c: (typeof CERTIFICATES)[number] }) {
   return (
-    <div className="bb-card mb-4 rounded-[14px] p-4">
-      <div className="flex items-center justify-between">
-        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-bb-nested">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-            <path d="M7 4h10v4a5 5 0 01-10 0V4z" stroke="#F5C24B" strokeWidth="1.5" />
-            <path d="M7 5H4v1a4 4 0 003 3.9M17 5h3v1a4 4 0 01-3 3.9M12 13v4m-3 3h6m-3-3v3" stroke="#F5C24B" strokeWidth="1.5" strokeLinecap="round" />
+    <div className="bb-cert w-[320px] shrink-0 rounded-[18px] p-[1.5px]">
+      <div className="bb-cert-inner relative overflow-hidden rounded-[16px] px-6 pb-6 pt-7 text-center">
+        {/* corner flourishes */}
+        <span className="bb-cert-corner absolute left-3 top-3" />
+        <span className="bb-cert-corner absolute right-3 top-3 rotate-90" />
+        <span className="bb-cert-corner absolute bottom-3 left-3 -rotate-90" />
+        <span className="bb-cert-corner absolute bottom-3 right-3 rotate-180" />
+
+        {/* brand line */}
+        <div className="flex items-center justify-center gap-2">
+          <img src="/assets/brand/logo.png" alt="" aria-hidden className="h-5 w-auto" />
+          <span className="bb-display text-sm tracking-[0.12em] text-bb-ink2">Blue Beak Capital</span>
+        </div>
+        <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.28em] text-bb-gold">
+          Certificate of Payout
+        </p>
+
+        {/* trophy seal */}
+        <div className="mx-auto mt-4 flex h-14 w-14 items-center justify-center rounded-full border border-bb-gold/40 bg-bb-gold/10">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+            <path d="M7 4h10v4.5a5 5 0 01-10 0V4z" stroke="#F5C24B" strokeWidth="1.4" strokeLinejoin="round" />
+            <path d="M7 5.2H4.2v1.1a3.6 3.6 0 002.9 3.5M17 5.2h2.8v1.1a3.6 3.6 0 01-2.9 3.5M12 13.5v3.2m-3.2 3.3h6.4m-4.4-3.3h2.4l.4 3.3H9.4l.4-3.3z" stroke="#F5C24B" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-        </span>
-        <span className="text-[11px] uppercase tracking-[0.14em] text-bb-ink3">Payout certificate</span>
-      </div>
-      <p className="mt-3 text-sm text-bb-ink2">{c.name}</p>
-      <p className="text-2xl font-bold tracking-tight text-bb-ink">{c.amount}</p>
-      <div className="mt-3 flex gap-2">
-        <span className="rounded-full border border-bb-line px-2 py-0.5 text-[11px] text-bb-ink3">{c.step}</span>
-        <span className="rounded-full border border-bb-line px-2 py-0.5 text-[11px] text-bb-ink3">{c.size}</span>
-        <span className="rounded-full border border-bb-line px-2 py-0.5 text-[11px] text-bb-ink3">{c.date}</span>
+        </div>
+
+        {/* awardee */}
+        <p className="mt-4 text-[11px] uppercase tracking-[0.16em] text-bb-ink3">Awarded to</p>
+        <p className="bb-display mt-1 text-3xl leading-none text-bb-ink">{c.name}</p>
+
+        {/* amount */}
+        <p className="mt-3 text-[11px] uppercase tracking-[0.16em] text-bb-ink3">Verified payout</p>
+        <p className="bb-display mt-0.5 text-[44px] leading-none">
+          <span className="bb-cert-amount">{c.amount}</span>
+        </p>
+
+        {/* meta */}
+        <div className="mt-5 grid grid-cols-3 gap-2 border-t border-bb-line pt-4 text-center">
+          {[
+            { l: "Challenge", v: c.step },
+            { l: "Account", v: c.size },
+            { l: "Date", v: c.date },
+          ].map((m) => (
+            <div key={m.l}>
+              <p className="text-[9px] uppercase tracking-[0.12em] text-bb-ink3">{m.l}</p>
+              <p className="mt-1 text-[13px] font-semibold text-bb-ink">{m.v}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* footer */}
+        <div className="mt-5 flex items-center justify-between border-t border-bb-line pt-3">
+          <span className="font-bb-mono text-[10px] tracking-wider text-bb-ink3" style={{ fontFamily: "JetBrains Mono, monospace" }}>
+            {c.serial}
+          </span>
+          <span className="flex items-center gap-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-bb-green">
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="8" r="6.4" stroke="#34D399" strokeWidth="1.3" />
+              <path d="M5.4 8.2l1.7 1.7 3.4-3.8" stroke="#34D399" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Verified
+          </span>
+        </div>
       </div>
     </div>
   );
 }
 
 export function CertificateWall() {
-  const colA = [...CERTIFICATES.slice(0, 4), ...CERTIFICATES.slice(0, 4)];
-  const colB = [...CERTIFICATES.slice(3), ...CERTIFICATES.slice(3)];
+  const row = [...CERTIFICATES, ...CERTIFICATES];
   return (
     <section className="relative overflow-hidden bg-bb-raised/30 py-[clamp(96px,12vw,160px)]">
-      <div className="mx-auto grid max-w-[1200px] items-center gap-14 px-5 md:grid-cols-[1.1fr_1fr]">
-        <Reveal>
-          <Kicker>Proof of payouts</Kicker>
+      <div className="mx-auto max-w-[1200px] px-5">
+        <Reveal className="text-center">
+          <div className="flex justify-center"><Kicker>Proof of payouts</Kicker></div>
           <DisplayTitle>Payout certificates</DisplayTitle>
-          <p className="mt-5 max-w-[46ch] text-base leading-relaxed text-bb-ink2">
-            Every payout comes with a certificate: the amount received, the payout date, and the account
-            type. A clear record of your earnings with BlueBeak Capital.
+          <p className="mx-auto mt-5 max-w-[52ch] text-base leading-relaxed text-bb-ink2">
+            Every withdrawal comes with a certificate worth framing: the trader, the verified amount,
+            the challenge, and the date. Real proof, on the record.
           </p>
-          <Link
-            href="/challenges"
-            className="bb-cta-framed mt-8 inline-flex items-center gap-2 rounded-[12px] px-6 py-3.5 text-[15px] font-medium text-bb-ink"
-          >
-            Start earning yours
-            <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
-              <path d="M2 8h11M9 3.5L13.5 8 9 12.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </Link>
-        </Reveal>
-        <div className="bb-marquee-pause bb-fade-y grid h-[520px] grid-cols-2 gap-4 overflow-hidden">
-          <div className="bb-marquee-y-up" style={{ "--bb-speed": "46s" } as React.CSSProperties}>
-            {colA.map((c, i) => <CertCard key={`a${i}`} c={c} />)}
+          <div className="mt-8 flex justify-center">
+            <Link
+              href="/challenges"
+              className="bb-cta-framed inline-flex items-center gap-2 rounded-[12px] px-6 py-3.5 text-[15px] font-medium text-bb-ink"
+            >
+              Start earning yours
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                <path d="M2 8h11M9 3.5L13.5 8 9 12.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
           </div>
-          <div className="bb-marquee-y-down" style={{ "--bb-speed": "56s" } as React.CSSProperties}>
-            {colB.map((c, i) => <CertCard key={`b${i}`} c={c} />)}
+        </Reveal>
+      </div>
+
+      {/* Framed certificate marquee */}
+      <div className="bb-marquee-pause mt-14">
+        <div className="bb-fade-x overflow-hidden">
+          <div className="bb-marquee-x flex w-max gap-5 px-2.5" style={{ "--bb-speed": "60s" } as React.CSSProperties}>
+            {row.map((c, i) => <PayoutCertificate key={`${c.serial}-${i}`} c={c} />)}
           </div>
         </div>
       </div>
