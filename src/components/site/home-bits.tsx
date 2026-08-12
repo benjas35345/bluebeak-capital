@@ -28,8 +28,9 @@ export function HeroParallax() {
     }
     const onReady = () => setBirdReady(true);
     vid.addEventListener("loadeddata", onReady);
-    // Safety: never hold the bird off-screen forever if the video stalls.
-    const t = setTimeout(onReady, 1500);
+    // Safety: on mobile/iOS the alpha webm never loads (unsupported) and the video is
+    // hidden anyway — start the fly-in promptly so the cutout still animates.
+    const t = setTimeout(onReady, 900);
     return () => {
       vid.removeEventListener("loadeddata", onReady);
       clearTimeout(t);
@@ -111,12 +112,13 @@ export function HeroParallax() {
       <div
         ref={birdRef}
         aria-hidden
-        className="pointer-events-none absolute right-[2%] top-[12%] z-50 w-[52vmin] max-w-[640px] will-change-transform md:right-[6%]"
+        className="pointer-events-none absolute right-[3%] top-[13%] z-40 w-[46vmin] max-w-[640px] will-change-transform sm:w-[50vmin] md:right-[6%] md:top-[12%] md:w-[52vmin]"
       >
         <div className={birdReady ? "bb-fly-in" : "bb-fly-hold"}>
+          {/* Desktop: looping clip with beating wings (alpha webm). */}
           <video
             ref={birdVidRef}
-            className="bb-drift h-auto w-full"
+            className="bb-drift hidden h-auto w-full md:block"
             autoPlay
             muted
             loop
@@ -124,9 +126,15 @@ export function HeroParallax() {
             preload="auto"
             poster="/assets/hero/bird.webp"
           >
-            {/* VP8 webm with a real alpha channel — true cutout, no background box */}
             <source src="/assets/hero/hero-bird.webm" type="video/webm" />
           </video>
+          {/* Mobile / iOS (no alpha-webm support): animated cutout still — flies in and drifts. */}
+          <img
+            src="/assets/hero/bird.webp"
+            alt=""
+            aria-hidden
+            className="bb-drift h-auto w-full md:hidden"
+          />
         </div>
       </div>
 

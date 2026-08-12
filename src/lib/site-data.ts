@@ -266,7 +266,7 @@ export const TRADING_RULES = [
   { q: "Disqualification", a: "Violation of firm trading rules, suspected manipulation or fraudulent activity, an account falling below the minimum equity requirement, failure to maintain the account in good standing, or use of prohibited strategies leads to disqualification." },
 ];
 
-export const SUPPORT_EMAIL = "support@bluebeak.com";
+export const SUPPORT_EMAIL = "support@bluebeakcapital.com";
 export const DASHBOARD_URL = "https://app.bluebeakcapital.com";
 // Checkout lives inside this site; checkout.bluebeakcapital.com can be
 // pointed at this same Vercel project (redirect to /checkout) later.

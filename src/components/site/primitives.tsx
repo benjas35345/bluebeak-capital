@@ -171,14 +171,18 @@ export function Segmented<T extends string>({
   ariaLabel: string;
 }) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
-  const [ind, setInd] = useState<{ left: number; width: number } | null>(null);
+  const [ind, setInd] = useState<{ left: number; width: number; top: number; height: number } | null>(null);
 
   useEffect(() => {
     const wrap = wrapRef.current;
     if (!wrap) return;
     const update = () => {
       const active = wrap.querySelector<HTMLButtonElement>(`[data-val="${CSS.escape(value)}"]`);
-      if (active) setInd({ left: active.offsetLeft, width: active.offsetWidth });
+      if (active) {
+        setInd({ left: active.offsetLeft, width: active.offsetWidth, top: active.offsetTop, height: active.offsetHeight });
+        // keep the active pill in view when the track scrolls on small screens
+        active.scrollIntoView({ block: "nearest", inline: "nearest" });
+      }
     };
     update();
     const ro = new ResizeObserver(update);
@@ -191,9 +195,9 @@ export function Segmented<T extends string>({
       ref={wrapRef}
       role="radiogroup"
       aria-label={ariaLabel}
-      className="bb-seg inline-flex max-w-full flex-wrap justify-center gap-1 rounded-full border border-bb-line bg-bb-raised/80 p-1"
+      className="bb-seg bb-rail inline-flex max-w-full flex-nowrap gap-1 overflow-x-auto rounded-full border border-bb-line bg-bb-raised/80 p-1"
     >
-      {ind ? <span className="bb-seg-ind" style={{ left: ind.left, width: ind.width }} aria-hidden /> : null}
+      {ind ? <span className="bb-seg-ind" style={{ left: ind.left, width: ind.width, top: ind.top, height: ind.height }} aria-hidden /> : null}
       {options.map((opt) => {
         const active = opt === value;
         return (
@@ -204,7 +208,7 @@ export function Segmented<T extends string>({
             role="radio"
             aria-checked={active}
             onClick={() => onChange(opt)}
-            className={`bb-seg-btn rounded-full font-medium ${
+            className={`bb-seg-btn shrink-0 whitespace-nowrap rounded-full font-medium ${
               size === "sm" ? "px-3.5 py-1.5 text-[13px]" : "px-4 py-2 text-sm"
             } ${active ? "text-[#052442]" : "text-bb-ink2 hover:text-bb-ink"}`}
           >
