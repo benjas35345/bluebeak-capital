@@ -180,8 +180,13 @@ export function Segmented<T extends string>({
       const active = wrap.querySelector<HTMLButtonElement>(`[data-val="${CSS.escape(value)}"]`);
       if (active) {
         setInd({ left: active.offsetLeft, width: active.offsetWidth, top: active.offsetTop, height: active.offsetHeight });
-        // keep the active pill in view when the track scrolls on small screens
-        active.scrollIntoView({ block: "nearest", inline: "nearest" });
+        // keep the active pill in view by scrolling ONLY the horizontal track — never the page.
+        // (scrollIntoView would scroll the whole window vertically, dropping visitors mid-page on load.)
+        if (wrap.scrollWidth > wrap.clientWidth) {
+          const target = active.offsetLeft - (wrap.clientWidth - active.offsetWidth) / 2;
+          const max = wrap.scrollWidth - wrap.clientWidth;
+          wrap.scrollLeft = Math.max(0, Math.min(target, max));
+        }
       }
     };
     update();
